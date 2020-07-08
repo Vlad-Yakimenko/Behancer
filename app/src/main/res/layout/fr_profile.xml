@@ -22,7 +22,7 @@
         <include
             android:id="@+id/view_profile"
             layout="@layout/v_profile"
-            android:visibility="@{vm.isErrorVisible ? V.VISIBLE : V.GONE}"
+            android:visibility="@{vm.isErrorVisible ? V.GONE : V.VISIBLE}"
             app:user="@{vm.user}" />
 
         <include
