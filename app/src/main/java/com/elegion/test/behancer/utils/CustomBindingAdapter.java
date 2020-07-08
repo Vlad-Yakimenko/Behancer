@@ -4,9 +4,14 @@ import android.databinding.BindingAdapter;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.View;
 import android.widget.ImageView;
+import android.widget.TextView;
 
+import com.elegion.test.behancer.R;
 import com.elegion.test.behancer.data.model.project.Project;
+import com.elegion.test.behancer.data.model.user.User;
+import com.elegion.test.behancer.databinding.UserBinding;
 import com.elegion.test.behancer.ui.projects.ProjectsAdapter;
 import com.squareup.picasso.Picasso;
 

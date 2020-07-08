@@ -47,7 +47,7 @@ public class ProjectsFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        ProjectsBinding binding =  ProjectsBinding.inflate(inflater, container, false);
+        ProjectsBinding binding = ProjectsBinding.inflate(inflater, container, false);
         binding.setVm(mProjectsViewModel);
         return binding.getRoot();
     }
