@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CompilerConfiguration">
+    <annotationProcessing>
+      <profile name="Gradle Imported" enabled="true">
+        <outputRelativeToContentRoot value="true" />
+        <processorPath useClasspath="false">
+          <entry name="$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.squareup/javapoet/1.10.0/712c178d35185d8261295913c9f2a7d6867a6007/javapoet-1.10.0.jar" />
+          <entry name="$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.arello-mobile/moxy-compiler/1.5.6/f6b5658cb92448da707a916eaf5cf6b7d8cefef6/moxy-compiler-1.5.6.jar" />
+          <entry name="$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.arello-mobile/moxy/1.5.6/dcc57b6999f7d01aaefa27b4064496169c239aa5/moxy-1.5.6.jar" />
+        </processorPath>
+        <module name="domain" />
+      </profile>
+    </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="domain" target="1.7" />
+    </bytecodeTargetLevel>
+  </component>
+</project>
