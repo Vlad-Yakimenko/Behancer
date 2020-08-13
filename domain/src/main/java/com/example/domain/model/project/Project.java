@@ -1,9 +1,10 @@
 package com.example.domain.model.project;
 
-import android.arch.persistence.room.ColumnInfo;
 import android.arch.persistence.room.Entity;
-import android.arch.persistence.room.Ignore;
 import android.arch.persistence.room.PrimaryKey;
+import android.arch.persistence.room.ColumnInfo;
+import android.arch.persistence.room.Embedded;
+import android.arch.persistence.room.Ignore;
 import android.support.annotation.NonNull;
 
 import com.google.gson.annotations.SerializedName;
@@ -28,7 +29,7 @@ public class Project implements Serializable {
     private long mPublishedOn;
 
     @SerializedName("covers")
-    @Ignore
+    @Embedded
     private Cover mCover;
 
     @SerializedName("owners")

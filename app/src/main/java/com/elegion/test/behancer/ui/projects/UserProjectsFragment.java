@@ -1,37 +1,40 @@
 package com.elegion.test.behancer.ui.projects;
 
-import android.os.Bundle;
+import android.content.Context;
 
 import com.elegion.test.behancer.AppDelegate;
-import com.elegion.test.behancer.common.BasePresenter;
+import com.elegion.test.behancer.di.ListenerModule;
+import com.elegion.test.behancer.di.UserProjectsFragmentModule;
+
+import toothpick.Scope;
+import toothpick.Toothpick;
+
+import static com.elegion.test.behancer.ui.profile.ProfileActivity.USERNAME_KEY;
 
 public class UserProjectsFragment extends ProjectsFragment {
 
-    UserProjectsPresenter mPresenter;
+    {
+        mOnItemClickListener = username -> {
+            // do nothing
+        };
+    }
 
     public static UserProjectsFragment newInstance() {
         return new UserProjectsFragment();
     }
 
-    public void setPresenter(UserProjectsPresenter mPresenter) {
-        this.mPresenter = mPresenter;
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        Scope scope = Toothpick.openScopes(AppDelegate.class, UserProjectsFragment.class);
+        assert getArguments() != null;
+        scope.installModules(new ListenerModule(mOnItemClickListener), new UserProjectsFragmentModule(getArguments().getString(USERNAME_KEY)));
+        Toothpick.inject(this, scope);
     }
 
     @Override
-    protected BasePresenter<ProjectsView> getPresenter() {
-        return mPresenter;
+    public void onDetach() {
+        Toothpick.closeScope(UserProjectsFragment.class);
+        super.onDetach();
     }
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        AppDelegate.getAppComponent().inject(this);
-    }
-
-    @Override
-    public void onItemClick(String username) {
-        // do nothing
-    }
-
-
 }

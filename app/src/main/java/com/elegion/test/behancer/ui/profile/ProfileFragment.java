@@ -1,61 +1,36 @@
 package com.elegion.test.behancer.ui.profile;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.ImageView;
-import android.widget.TextView;
 
-import com.arellomobile.mvp.presenter.InjectPresenter;
-import com.arellomobile.mvp.presenter.ProvidePresenter;
 import com.elegion.test.behancer.AppDelegate;
-import com.elegion.test.behancer.R;
-import com.elegion.test.behancer.common.PresenterFragment;
-import com.elegion.test.behancer.common.RefreshOwner;
-import com.elegion.test.behancer.common.Refreshable;
 import com.elegion.test.behancer.common.SingleFragmentActivity;
-import com.example.domain.model.user.User;
-import com.elegion.test.behancer.di.ProfileFragment.DaggerProfileFragmentComponent;
-import com.elegion.test.behancer.di.ProfileFragment.ProfileFragmentComponent;
+import com.elegion.test.behancer.databinding.ProfileBinding;
 import com.elegion.test.behancer.di.ProfileFragment.ProfileFragmentModule;
+import com.elegion.test.behancer.ui.projects.ProjectsFragment;
 import com.elegion.test.behancer.ui.projects.UserProjectsFragment;
-import com.elegion.test.behancer.ui.projects.UserProjectsPresenter;
-import com.elegion.test.behancer.utils.DateUtils;
-import com.squareup.picasso.Picasso;
 
-public class ProfileFragment extends PresenterFragment implements ProfileView, Refreshable {
+import java.util.Objects;
+
+import javax.inject.Inject;
+
+import toothpick.Scope;
+import toothpick.Toothpick;
+
+import static com.elegion.test.behancer.ui.profile.ProfileActivity.USERNAME_KEY;
+
+public class ProfileFragment extends Fragment {
 
     public static final String PROFILE_KEY = "PROFILE_KEY";
-    public static final String USERNAME_KEY = "USERNAME_KEY";
 
-    private RefreshOwner mRefreshOwner;
-    private View mErrorView;
-    private View mProfileView;
-    private String mUsername;
-
-    private TextView mProfileName;
-    private TextView mProfileCreatedOn;
-    private TextView mProfileLocation;
-    private Button mButton;
-    private ImageView mProfileImage;
-
-    private ProfileFragmentComponent component = DaggerProfileFragmentComponent
-            .builder()
-            .appComponent(AppDelegate.getAppComponent())
-            .profileFragmentModule(new ProfileFragmentModule(this))
-            .build();
-
-    @InjectPresenter
-    ProfilePresenter mPresenter;
-
-    @ProvidePresenter
-    ProfilePresenter providePresenter() {
-        return new ProfilePresenter(component);
-    }
+    @Inject
+    ProfileViewModel mProfileViewModel;
 
     public static ProfileFragment newInstance(Bundle args) {
         ProfileFragment fragment = new ProfileFragment();
@@ -64,104 +39,50 @@ public class ProfileFragment extends PresenterFragment implements ProfileView, R
         return fragment;
     }
 
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        Scope scope = Toothpick.openScopes(AppDelegate.class, ProfileFragment.class);
+        scope.installModules(new ProfileFragmentModule());
+        Toothpick.inject(this, scope);
+    }
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fr_profile, container, false);
-    }
-
-    @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        mErrorView = view.findViewById(R.id.errorView);
-        mProfileView = view.findViewById(R.id.view_profile);
-
-        mButton = view.findViewById(R.id.btn_user_projects);
-        mButton.setOnClickListener(v -> {
-            UserProjectsFragment fragment = UserProjectsFragment.newInstance();
-            fragment.setPresenter(new UserProjectsPresenter(mUsername));
-            Bundle args = new Bundle();
-            args.putString(USERNAME_KEY, mUsername);
-            fragment.setArguments(args);
-            ((SingleFragmentActivity) getActivity()).changeFragment(fragment);
-        });
-
-        mProfileImage = view.findViewById(R.id.iv_profile);
-        mProfileName = view.findViewById(R.id.tv_display_name_details);
-        mProfileCreatedOn = view.findViewById(R.id.tv_created_on_details);
-        mProfileLocation = view.findViewById(R.id.tv_location_details);
+        ProfileBinding binding = ProfileBinding.inflate(inflater, container, false);
+        binding.setVm(mProfileViewModel);
+        binding.setLifecycleOwner(this);
+        return binding.getRoot();
     }
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        mRefreshOwner = getActivity() instanceof RefreshOwner ? (RefreshOwner) getActivity() : null;
-
         if (getArguments() != null) {
-            mUsername = getArguments().getString(PROFILE_KEY);
+            String username = getArguments().getString(PROFILE_KEY);
+            mProfileViewModel.setUsername(username);
+            mProfileViewModel.setOnClickListener(view -> {
+                ProjectsFragment fragment = UserProjectsFragment.newInstance();
+                Bundle args = new Bundle();
+                args.putString(USERNAME_KEY, mProfileViewModel.getUsername());
+                fragment.setArguments(args);
+                ((SingleFragmentActivity) Objects.requireNonNull(getActivity())).changeFragment(fragment);
+            });
+
+            if (getActivity() != null) {
+                getActivity().setTitle(username);
+            }
         }
 
-        if (getActivity() != null) {
-            getActivity().setTitle(mUsername);
-        }
-
-        mProfileView.setVisibility(View.VISIBLE);
-
-        onRefreshData();
-    }
-
-    @Override
-    public void onRefreshData() {
-        mPresenter.getProfile(mUsername);
-    }
-
-    private void bind(User user) {
-        Picasso.with(getContext())
-                .load(user.getImage().getPhotoUrl())
-                .fit()
-                .into(mProfileImage);
-        mProfileName.setText(user.getDisplayName());
-        mProfileCreatedOn.setText(DateUtils.format(user.getCreatedOn()));
-        mProfileLocation.setText(user.getLocation());
-    }
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setRetainInstance(true);
-    }
-
-    @Override
-    protected ProfilePresenter getPresenter() {
-        return mPresenter;
+        mProfileViewModel.obtainProfile();
     }
 
     @Override
     public void onDetach() {
-        mRefreshOwner = null;
+        mProfileViewModel.dispatchDetach();
+        Toothpick.closeScope(ProfileFragment.class);
         super.onDetach();
-    }
-
-    @Override
-    public void showRefresh() {
-        mRefreshOwner.setRefreshState(true);
-    }
-
-    @Override
-    public void hideRefresh() {
-        mRefreshOwner.setRefreshState(false);
-    }
-
-    @Override
-    public void showError() {
-        mErrorView.setVisibility(View.VISIBLE);
-        mProfileView.setVisibility(View.GONE);
-    }
-
-    @Override
-    public void showProfile(User user) {
-        mErrorView.setVisibility(View.GONE);
-        mProfileView.setVisibility(View.VISIBLE);
-        bind(user);
     }
 }

@@ -1,27 +1,16 @@
 package com.elegion.test.behancer.di;
 
-import com.example.domain.service.ProfileService;
-import com.example.domain.service.ProfileServiceImpl;
-import com.example.domain.service.ProjectService;
-import com.example.domain.service.ProjectServiceImpl;
+import com.elegion.test.behancer.data_utils.service.ProfileService;
+import com.elegion.test.behancer.data_utils.service.ProfileServiceImpl;
+import com.elegion.test.behancer.data_utils.service.ProjectService;
+import com.elegion.test.behancer.data_utils.service.ProjectServiceImpl;
 
-import javax.inject.Singleton;
+import toothpick.config.Module;
 
-import dagger.Module;
-import dagger.Provides;
+public class ServiceModule extends Module {
 
-@Module
-public class ServiceModule {
-
-    @Provides
-    @Singleton
-    ProjectService provideProjectService(ProjectServiceImpl projectService) {
-        return projectService;
-    }
-
-    @Provides
-    @Singleton
-    ProfileService provideProfileService(ProfileServiceImpl profileService) {
-        return profileService;
+    public ServiceModule() {
+        bind(ProjectService.class).to(ProjectServiceImpl.class);
+        bind(ProfileService.class).to(ProfileServiceImpl.class);
     }
 }

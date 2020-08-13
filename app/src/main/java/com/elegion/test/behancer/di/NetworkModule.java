@@ -1,57 +1,56 @@
 package com.elegion.test.behancer.di;
 
-import com.elegion.test.behancer.data.api.ApiKeyInterceptor;
-import com.elegion.test.behancer.data.api.BehanceApi;
+import com.elegion.test.behancer.data_utils.api.ApiKeyInterceptor;
+import com.elegion.test.behancer.data_utils.api.BehanceApi;
 import com.example.data.BuildConfig;
 import com.google.gson.Gson;
 
-import javax.inject.Singleton;
-
-import dagger.Module;
-import dagger.Provides;
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
+import toothpick.config.Module;
 
-@Module
-public class NetworkModule {
+public class NetworkModule extends Module {
 
-    @Provides
-    @Singleton
-    OkHttpClient provideClient() {
+    private final Gson mGson = provideGson();
+    private final OkHttpClient mOkHttpClient = provideOkHttpClient();
+    private final Retrofit mRetrofit = provideRetrofit();
+
+    public NetworkModule() {
+        bind(Gson.class).toInstance(mGson);
+        bind(OkHttpClient.class).toInstance(mOkHttpClient);
+        bind(Retrofit.class).toInstance(mRetrofit);
+        bind(BehanceApi.class).toInstance(provideApiService());
+    }
+
+    OkHttpClient provideOkHttpClient() {
         OkHttpClient.Builder builder = new OkHttpClient().newBuilder();
         builder.addInterceptor(new ApiKeyInterceptor());
 
-        if (!BuildConfig.BUILD_TYPE.contains("release")) {
+        if (!com.elegion.test.behancer.BuildConfig.BUILD_TYPE.contains("release")) {
             builder.addInterceptor(new HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY));
         }
 
         return builder.build();
     }
 
-    @Provides
-    @Singleton
     Gson provideGson() {
         return new Gson();
     }
 
-    @Provides
-    @Singleton
-    Retrofit provideRetrofit(Gson gson, OkHttpClient client) {
+    Retrofit provideRetrofit() {
         return new Retrofit.Builder()
                 .baseUrl(BuildConfig.API_URL)
                 // need for interceptors
-                .client(client)
-                .addConverterFactory(GsonConverterFactory.create(gson))
+                .client(mOkHttpClient)
+                .addConverterFactory(GsonConverterFactory.create(mGson))
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                 .build();
     }
 
-    @Provides
-    @Singleton
-    BehanceApi provideApiService(Retrofit retrofit) {
-        return retrofit.create(BehanceApi.class);
+    BehanceApi provideApiService() {
+        return mRetrofit.create(BehanceApi.class);
     }
 }

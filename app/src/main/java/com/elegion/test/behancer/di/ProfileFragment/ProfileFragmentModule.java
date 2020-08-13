@@ -1,22 +1,12 @@
 package com.elegion.test.behancer.di.ProfileFragment;
 
-import com.elegion.test.behancer.ui.profile.ProfileView;
+import com.elegion.test.behancer.ui.profile.ProfileViewModel;
 
-import dagger.Module;
-import dagger.Provides;
+import toothpick.config.Module;
 
-@Module
-public class ProfileFragmentModule {
+public class ProfileFragmentModule extends Module {
 
-    private ProfileView mFragment;
-
-    public ProfileFragmentModule(ProfileView fragment) {
-        mFragment = fragment;
-    }
-
-    @ProfileFragmentScope
-    @Provides
-    public ProfileView provideProfileView() {
-        return mFragment;
+    public ProfileFragmentModule() {
+        bind(ProfileViewModel.class).to(ProfileViewModel.class);
     }
 }

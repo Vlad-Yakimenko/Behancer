@@ -1,24 +1,20 @@
 package com.elegion.test.behancer.ui.projects;
 
+import android.arch.paging.PagedListAdapter;
 import android.support.annotation.NonNull;
-import android.support.v7.widget.RecyclerView;
+import android.support.v7.util.DiffUtil;
 import android.view.LayoutInflater;
-import android.view.View;
 import android.view.ViewGroup;
 
-import com.elegion.test.behancer.R;
-import com.example.domain.model.project.Project;
+import com.elegion.test.behancer.databinding.ProjectBinding;
+import com.example.domain.model.project.RichProject;
 
-import java.util.ArrayList;
-import java.util.List;
+public class ProjectsAdapter extends PagedListAdapter<RichProject, ProjectsHolder> {
 
-public class ProjectsAdapter extends RecyclerView.Adapter<ProjectsHolder> {
-
-    @NonNull
-    private final List<Project> mProjects = new ArrayList<>();
     private final OnItemClickListener mOnItemClickListener;
 
     public ProjectsAdapter(OnItemClickListener onItemClickListener) {
+        super(CALLBACK);
         mOnItemClickListener = onItemClickListener;
     }
 
@@ -26,31 +22,29 @@ public class ProjectsAdapter extends RecyclerView.Adapter<ProjectsHolder> {
     @Override
     public ProjectsHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(parent.getContext());
-        View view = inflater.inflate(R.layout.li_projects, parent, false);
-        return new ProjectsHolder(view);
+        ProjectBinding binding = ProjectBinding.inflate(inflater, parent, false);
+        return new ProjectsHolder(binding);
     }
 
     @Override
     public void onBindViewHolder(@NonNull ProjectsHolder holder, int position) {
-        Project project = mProjects.get(position);
-        holder.bind(project, mOnItemClickListener);
+        RichProject project = getItem(position);
+        if (project != null) {
+            holder.bind(project, mOnItemClickListener);
+        }
     }
 
-    @Override
-    public int getItemCount() {
-        return mProjects.size();
-    }
-
-    public void addData(List<Project> data, boolean isRefreshed) {
-        if (isRefreshed) {
-            mProjects.clear();
+    private static final DiffUtil.ItemCallback<RichProject> CALLBACK = new DiffUtil.ItemCallback<RichProject>() {
+        @Override
+        public boolean areItemsTheSame(RichProject oldItem, RichProject newItem) {
+            return oldItem.mProject.getId() == newItem.mProject.getId();
         }
 
-        // TODO: 09.04.2018 ДЗ обработать кейс с data.size == 0 || data == null
-
-        mProjects.addAll(data);
-        notifyDataSetChanged();
-    }
+        @Override
+        public boolean areContentsTheSame(RichProject oldItem, RichProject newItem) {
+            return oldItem.equals(newItem);
+        }
+    };
 
     public interface OnItemClickListener {
 

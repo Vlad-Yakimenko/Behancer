@@ -8,6 +8,8 @@ import android.support.annotation.NonNull;
 
 import com.google.gson.annotations.SerializedName;
 
+import static android.arch.persistence.room.ForeignKey.CASCADE;
+
 import java.io.Serializable;
 
 /**
@@ -16,7 +18,8 @@ import java.io.Serializable;
 @Entity(foreignKeys = @ForeignKey(
         entity = Project.class,
         parentColumns = "id",
-        childColumns = "project_id"
+        childColumns = "project_id",
+        onDelete = CASCADE
 ))
 public class Owner implements Serializable {
 

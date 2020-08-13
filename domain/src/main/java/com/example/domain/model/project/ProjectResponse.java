@@ -5,10 +5,6 @@ import com.google.gson.annotations.SerializedName;
 import java.io.Serializable;
 import java.util.List;
 
-/**
- * Created by Vladislav Falzan.
- */
-
 public class ProjectResponse implements Serializable {
 
     @SerializedName("projects")

@@ -1,63 +1,88 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/view_profile"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:layout_margin="8dp"
-    android:visibility="gone">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:bind="http://schemas.android.com/tools">
 
-    <ImageView
-        android:id="@+id/iv_profile"
-        android:layout_width="128dp"
-        android:layout_height="128dp"
-        android:contentDescription="@string/content_description_details" />
+    <data class="UserBinding">
 
-    <TextView
-        android:id="@+id/tv_display_name_details"
-        android:layout_width="wrap_content"
+        <import
+            alias="DU"
+            type="com.elegion.test.behancer.utils.DateUtils" />
+
+        <variable
+            name="user"
+            type="com.example.domain.model.user.User" />
+
+        <variable
+            name="listener"
+            type="android.view.View.OnClickListener" />
+
+    </data>
+
+    <RelativeLayout
+        android:id="@+id/view_profile"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignTop="@id/iv_profile"
-        android:layout_marginStart="8dp"
-        android:layout_marginLeft="8dp"
-        android:layout_toEndOf="@id/iv_profile"
-        android:layout_toRightOf="@id/iv_profile"
-        android:textColor="@color/colorAccent"
-        android:textStyle="bold" />
+        android:layout_margin="8dp">
 
-    <TextView
-        android:id="@+id/tv_username_details"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/tv_display_name_details"
-        android:layout_alignStart="@id/tv_display_name_details"
-        android:layout_alignLeft="@id/tv_display_name_details" />
+        <ImageView
+            android:id="@+id/iv_profile"
+            android:layout_width="128dp"
+            android:layout_height="128dp"
+            android:contentDescription="@string/content_description_details"
+            app:imageUrl="@{user.image.photoUrl}" />
 
-    <TextView
-        android:id="@+id/tv_created_on_details"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/tv_username_details"
-        android:layout_alignStart="@id/tv_username_details"
-        android:layout_alignLeft="@id/tv_username_details" />
+        <TextView
+            android:id="@+id/tv_display_name_details"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@id/iv_profile"
+            android:layout_marginStart="8dp"
+            android:layout_marginLeft="8dp"
+            android:layout_toEndOf="@id/iv_profile"
+            android:layout_toRightOf="@id/iv_profile"
+            android:text="@{user.displayName}"
+            android:textColor="@color/colorAccent"
+            android:textStyle="bold" />
 
-    <TextView
-        android:id="@+id/tv_location_details"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/tv_created_on_details"
-        android:layout_alignStart="@id/tv_created_on_details"
-        android:layout_alignLeft="@id/tv_created_on_details" />
+        <TextView
+            android:id="@+id/tv_username_details"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tv_display_name_details"
+            android:layout_alignStart="@id/tv_display_name_details"
+            android:layout_alignLeft="@id/tv_display_name_details" />
 
-    <Button
-        android:id="@+id/btn_user_projects"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/iv_profile"
-        android:layout_centerHorizontal="true"
-        android:layout_marginStart="5dp"
-        android:layout_marginLeft="5dp"
-        android:layout_toEndOf="@+id/iv_profile"
-        android:layout_toRightOf="@+id/iv_profile"
-        android:text="@string/all_author_works" />
+        <TextView
+            android:id="@+id/tv_created_on_details"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tv_username_details"
+            android:layout_alignStart="@id/tv_username_details"
+            android:layout_alignLeft="@id/tv_username_details"
+            android:text="@{DU.format(user.getCreatedOn())}" />
 
-</RelativeLayout>
+        <TextView
+            android:id="@+id/tv_location_details"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tv_created_on_details"
+            android:layout_alignStart="@id/tv_created_on_details"
+            android:layout_alignLeft="@id/tv_created_on_details"
+            android:text="@{user.location}" />
+
+        <Button
+            android:id="@+id/btn_user_projects"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/iv_profile"
+            android:layout_centerHorizontal="true"
+            android:layout_marginStart="5dp"
+            android:layout_marginLeft="5dp"
+            android:layout_toEndOf="@+id/iv_profile"
+            android:layout_toRightOf="@+id/iv_profile"
+            android:onClick="@{listener}"
+            android:text="@string/all_author_works" />
+
+    </RelativeLayout>
+</layout>
