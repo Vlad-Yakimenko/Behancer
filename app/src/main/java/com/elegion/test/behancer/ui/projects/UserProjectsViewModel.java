@@ -1,12 +1,8 @@
 package com.elegion.test.behancer.ui.projects;
 
-import android.os.Build;
-import android.support.annotation.RequiresApi;
+import androidx.annotation.RequiresApi;
 
 import com.elegion.test.behancer.data_utils.service.ProjectService;
-import com.example.domain.model.project.ProjectResponse;
-
-import java.security.Provider;
 
 import javax.inject.Inject;
 

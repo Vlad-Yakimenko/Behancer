@@ -14,19 +14,20 @@
 
     </data>
 
-    <android.support.v4.widget.SwipeRefreshLayout
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
         android:id="@+id/refresher"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         bind:onRefresh="@{vm.onRefreshListener}"
         bind:refreshState="@{vm.isLoading}">
 
-        <LinearLayout
+        <FrameLayout
+            android:id="@+id/linear"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <android.support.v7.widget.RecyclerView
+            <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recycler"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -34,12 +35,21 @@
                 bind:clickHandler="@{vm.onItemClickListener}"
                 bind:data="@{vm.projects}" />
 
-            <include
-                layout="@layout/v_error"
-                android:visibility="@{vm.isErrorVisible ? V.VISIBLE : V.GONE}" />
+            <androidx.core.widget.NestedScrollView
+                android:id="@+id/errorScrollView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:fillViewport="true"
+                android:visibility="@{vm.isErrorVisible ? V.VISIBLE : V.GONE}">
 
-        </LinearLayout>
+                <include
+                    android:id="@+id/projectErrorView"
+                    layout="@layout/v_error" />
 
-    </android.support.v4.widget.SwipeRefreshLayout>
+            </androidx.core.widget.NestedScrollView>
+
+        </FrameLayout>
+
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
 </layout>

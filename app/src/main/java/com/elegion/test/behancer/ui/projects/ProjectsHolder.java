@@ -1,6 +1,6 @@
 package com.elegion.test.behancer.ui.projects;
 
-import android.support.v7.widget.RecyclerView;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.elegion.test.behancer.databinding.ProjectBinding;
 import com.example.domain.model.project.RichProject;

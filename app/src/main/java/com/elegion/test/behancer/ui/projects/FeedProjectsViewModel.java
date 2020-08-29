@@ -1,7 +1,5 @@
 package com.elegion.test.behancer.ui.projects;
 
-import android.support.v4.widget.SwipeRefreshLayout;
-
 import com.elegion.test.behancer.data_utils.service.ProjectService;
 
 import javax.inject.Inject;

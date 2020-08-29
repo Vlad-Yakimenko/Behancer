@@ -1,10 +1,10 @@
 package com.elegion.test.behancer.ui.projects;
 
-import android.arch.lifecycle.LiveData;
-import android.arch.lifecycle.MutableLiveData;
-import android.arch.lifecycle.ViewModel;
-import android.arch.paging.PagedList;
-import android.support.v4.widget.SwipeRefreshLayout;
+import androidx.lifecycle.LiveData;
+import androidx.lifecycle.MutableLiveData;
+import androidx.lifecycle.ViewModel;
+import androidx.paging.PagedList;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.elegion.test.behancer.data_utils.service.ProjectService;
 import com.example.domain.model.project.RichProject;

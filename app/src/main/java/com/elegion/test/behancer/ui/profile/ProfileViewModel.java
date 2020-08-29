@@ -1,8 +1,10 @@
 package com.elegion.test.behancer.ui.profile;
 
-import android.databinding.ObservableBoolean;
-import android.databinding.ObservableField;
-import android.support.v4.widget.SwipeRefreshLayout;
+import androidx.lifecycle.LiveData;
+import androidx.lifecycle.MutableLiveData;
+import androidx.databinding.ObservableBoolean;
+import androidx.databinding.ObservableField;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import android.view.View;
 
 import com.example.domain.model.user.User;
@@ -10,7 +12,6 @@ import com.elegion.test.behancer.data_utils.service.ProfileService;
 
 import javax.inject.Inject;
 
-import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 
@@ -21,9 +22,9 @@ public class ProfileViewModel {
     @Inject
     ProfileService mService;
 
-    private ObservableBoolean mIsErrorVisible = new ObservableBoolean(false);
-    private ObservableBoolean mIsLoading = new ObservableBoolean(false);
-    private ObservableField<User> mUser = new ObservableField<>();
+    private MutableLiveData<Boolean> mIsErrorVisible = new MutableLiveData<>();
+    private MutableLiveData<Boolean> mIsLoading = new MutableLiveData<>();
+    private LiveData<User> mUser;
     private SwipeRefreshLayout.OnRefreshListener mOnRefreshListener = this::obtainProfile;
 
     private View.OnClickListener mOnClickListener;
@@ -32,13 +33,12 @@ public class ProfileViewModel {
     public void obtainProfile() {
         mDisposable = mService.getUser(mUsername)
                 .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .doOnSubscribe(disposable -> mIsLoading.set(true))
-                .doOnSuccess(user -> mIsErrorVisible.set(false))
-                .doFinally(() -> mIsLoading.set(false))
+                .doOnSubscribe(disposable -> mIsLoading.postValue(true))
+                .doOnSuccess(user -> mIsErrorVisible.postValue(false))
+                .doFinally(() -> mIsLoading.postValue(false))
                 .subscribe(
-                        response -> mUser.set(response),
-                        throwable -> mIsErrorVisible.set(true)
+                        response -> mService.insertUser(response),
+                        throwable -> mIsErrorVisible.postValue(true)
                 );
     }
 
@@ -48,15 +48,15 @@ public class ProfileViewModel {
         }
     }
 
-    public ObservableBoolean getIsErrorVisible() {
+    public LiveData<Boolean> getIsErrorVisible() {
         return mIsErrorVisible;
     }
 
-    public ObservableBoolean getIsLoading() {
+    public LiveData<Boolean> getIsLoading() {
         return mIsLoading;
     }
 
-    public ObservableField<User> getUser() {
+    public LiveData<User> getUser() {
         return mUser;
     }
 
@@ -70,6 +70,7 @@ public class ProfileViewModel {
 
     public void setUsername(String mUsername) {
         this.mUsername = mUsername;
+        mUser = mService.getUserLive(mUsername);
     }
 
     public View.OnClickListener getOnClickListener() {

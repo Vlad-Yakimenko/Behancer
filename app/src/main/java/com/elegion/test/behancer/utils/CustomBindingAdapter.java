@@ -1,17 +1,15 @@
 package com.elegion.test.behancer.utils;
 
-import android.arch.paging.PagedList;
-import android.databinding.BindingAdapter;
-import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
+import androidx.paging.PagedList;
+import androidx.databinding.BindingAdapter;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import android.widget.ImageView;
 
 import com.elegion.test.behancer.ui.projects.ProjectsAdapter;
 import com.example.domain.model.project.RichProject;
 import com.squareup.picasso.Picasso;
-
-import java.util.List;
 
 public class CustomBindingAdapter {
 

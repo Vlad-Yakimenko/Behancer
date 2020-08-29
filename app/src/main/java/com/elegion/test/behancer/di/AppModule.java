@@ -1,6 +1,6 @@
 package com.elegion.test.behancer.di;
 
-import android.arch.persistence.room.Room;
+import androidx.room.Room;
 
 import com.elegion.test.behancer.AppDelegate;
 import com.elegion.test.behancer.data_utils.database.BehanceDao;

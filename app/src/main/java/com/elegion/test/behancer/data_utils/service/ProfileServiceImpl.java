@@ -1,5 +1,7 @@
 package com.elegion.test.behancer.data_utils.service;
 
+import androidx.lifecycle.LiveData;
+
 import com.elegion.test.behancer.data_utils.repository.ProfileRepository;
 import com.example.domain.ApiUtils;
 import com.example.domain.model.user.User;
@@ -29,6 +31,11 @@ public class ProfileServiceImpl implements ProfileService {
                         ApiUtils.NETWORK_EXCEPTIONS.contains(throwable.getClass())
                                 ? (mDBRepository.getUser(username) != null ? mDBRepository.getUser(username).blockingGet() : null)
                                 : null);
+    }
+
+    @Override
+    public LiveData<User> getUserLive(String username) {
+        return mDBRepository.getUserLive(username);
     }
 
     @Override

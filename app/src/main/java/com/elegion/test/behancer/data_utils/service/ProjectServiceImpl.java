@@ -1,7 +1,7 @@
 package com.elegion.test.behancer.data_utils.service;
 
-import android.arch.lifecycle.LiveData;
-import android.arch.paging.PagedList;
+import androidx.lifecycle.LiveData;
+import androidx.paging.PagedList;
 
 import com.elegion.test.behancer.data_utils.repository.ProjectRepository;
 import com.example.domain.model.project.Project;

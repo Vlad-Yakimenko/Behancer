@@ -14,32 +14,41 @@
 
     </data>
 
-    <android.support.v4.widget.SwipeRefreshLayout
-        android:id="@+id/refresher"
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id="@+id/refresherProfile"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         bind:onRefresh="@{vm.onRefreshListener}"
         bind:refreshState="@{vm.isLoading}">
 
-        <LinearLayout
+        <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical">
+            android:fillViewport="true">
 
-            <include
-                android:id="@+id/view_profile"
-                layout="@layout/v_profile"
-                android:visibility="@{vm.isErrorVisible ? V.GONE : V.VISIBLE}"
-                bind:listener="@{vm.onClickListener}"
-                bind:user="@{vm.user}" />
+            <LinearLayout
+                android:id="@+id/linearProfile"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
 
-            <include
-                android:id="@+id/view_error_profile"
-                layout="@layout/v_error"
-                android:visibility="@{vm.isErrorVisible ? V.VISIBLE : V.GONE}" />
+                <include
+                    android:id="@+id/view_profile"
+                    layout="@layout/v_profile"
+                    android:visibility="@{vm.isErrorVisible ? V.GONE : V.VISIBLE}"
+                    bind:listener="@{vm.onClickListener}"
+                    bind:user="@{vm.user}" />
 
-        </LinearLayout>
 
-    </android.support.v4.widget.SwipeRefreshLayout>
+                <include
+                    android:id="@+id/view_error_profile"
+                    layout="@layout/v_error"
+                    android:visibility="@{vm.isErrorVisible ? V.VISIBLE : V.GONE}" />
+
+            </LinearLayout>
+
+        </androidx.core.widget.NestedScrollView>
+
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
 </layout>

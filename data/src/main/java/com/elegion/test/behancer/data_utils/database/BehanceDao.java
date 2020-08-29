@@ -1,11 +1,11 @@
 package com.elegion.test.behancer.data_utils.database;
 
-import android.arch.lifecycle.LiveData;
-import android.arch.paging.DataSource;
-import android.arch.persistence.room.Dao;
-import android.arch.persistence.room.Insert;
-import android.arch.persistence.room.OnConflictStrategy;
-import android.arch.persistence.room.Query;
+import androidx.lifecycle.LiveData;
+import androidx.paging.DataSource;
+import androidx.room.Dao;
+import androidx.room.Insert;
+import androidx.room.OnConflictStrategy;
+import androidx.room.Query;
 
 import com.example.domain.model.project.Cover;
 import com.example.domain.model.project.Owner;
@@ -49,7 +49,10 @@ public interface BehanceDao {
     @Query("select * from user where username = :userName")
     User getUserByName(String userName);
 
-    @Query("select * from image where user_id = :userId")
+    @Query("select * from user where username = :userName")
+    LiveData<User> getUserByNameLive(String userName);
+
+    @Query("select photo_id, photo_url from user where id = :userId")
     Image getImageFromUser(int userId);
 
     @Query("delete from owner")
