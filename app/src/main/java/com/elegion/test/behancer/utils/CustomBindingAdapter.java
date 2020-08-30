@@ -7,8 +7,8 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import android.widget.ImageView;
 
+import com.elegion.domain.model.project.RichProject;
 import com.elegion.test.behancer.ui.projects.ProjectsAdapter;
-import com.example.domain.model.project.RichProject;
 import com.squareup.picasso.Picasso;
 
 public class CustomBindingAdapter {

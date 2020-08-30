@@ -1,7 +1,7 @@
 package com.elegion.test.behancer.ui.projects;
 
+import com.elegion.domain.model.project.RichProject;
 import com.elegion.test.behancer.utils.DateUtils;
-import com.example.domain.model.project.RichProject;
 
 public class ProjectListItemViewModel {
 

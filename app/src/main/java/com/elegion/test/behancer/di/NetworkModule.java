@@ -1,7 +1,7 @@
 package com.elegion.test.behancer.di;
 
-import com.elegion.test.behancer.data_utils.api.ApiKeyInterceptor;
-import com.elegion.test.behancer.data_utils.api.BehanceApi;
+import com.elegion.test.behancer.data.api.ApiKeyInterceptor;
+import com.elegion.test.behancer.data.api.BehanceApi;
 import com.example.data.BuildConfig;
 import com.google.gson.Gson;
 

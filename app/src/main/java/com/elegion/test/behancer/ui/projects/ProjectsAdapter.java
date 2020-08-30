@@ -1,13 +1,15 @@
 package com.elegion.test.behancer.ui.projects;
 
-import androidx.paging.PagedListAdapter;
-import androidx.annotation.NonNull;
-import androidx.recyclerview.widget.DiffUtil;
+import android.annotation.SuppressLint;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
+import androidx.annotation.NonNull;
+import androidx.paging.PagedListAdapter;
+import androidx.recyclerview.widget.DiffUtil;
+
+import com.elegion.domain.model.project.RichProject;
 import com.elegion.test.behancer.databinding.ProjectBinding;
-import com.example.domain.model.project.RichProject;
 
 public class ProjectsAdapter extends PagedListAdapter<RichProject, ProjectsHolder> {
 

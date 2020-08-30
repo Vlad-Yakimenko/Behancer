@@ -3,8 +3,8 @@ package com.elegion.test.behancer.di;
 import androidx.room.Room;
 
 import com.elegion.test.behancer.AppDelegate;
-import com.elegion.test.behancer.data_utils.database.BehanceDao;
-import com.elegion.test.behancer.data_utils.database.BehanceDatabase;
+import com.elegion.test.behancer.data.database.BehanceDao;
+import com.elegion.test.behancer.data.database.BehanceDatabase;
 
 import toothpick.config.Module;
 

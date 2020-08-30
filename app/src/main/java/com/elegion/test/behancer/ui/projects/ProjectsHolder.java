@@ -2,8 +2,8 @@ package com.elegion.test.behancer.ui.projects;
 
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.elegion.domain.model.project.RichProject;
 import com.elegion.test.behancer.databinding.ProjectBinding;
-import com.example.domain.model.project.RichProject;
 
 public class ProjectsHolder extends RecyclerView.ViewHolder {
 

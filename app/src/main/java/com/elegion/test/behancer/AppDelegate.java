@@ -1,7 +1,6 @@
 package com.elegion.test.behancer;
 
 import android.app.Application;
-import android.app.Service;
 
 import com.elegion.test.behancer.app.FactoryRegistry;
 import com.elegion.test.behancer.app.MemberInjectorRegistry;

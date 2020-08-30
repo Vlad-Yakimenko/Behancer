@@ -1,6 +1,6 @@
 package com.elegion.test.behancer.ui.projects;
 
-import com.elegion.test.behancer.data_utils.service.ProjectService;
+import com.elegion.domain.service.ProjectService;
 
 import javax.inject.Inject;
 

@@ -1,11 +1,11 @@
 package com.elegion.test.behancer.di;
 
-import com.elegion.test.behancer.data_utils.repository.ProfileDBRepository;
-import com.elegion.test.behancer.data_utils.repository.ProfileServerRepository;
-import com.elegion.test.behancer.data_utils.repository.ProjectDBRepository;
-import com.elegion.test.behancer.data_utils.repository.ProjectServerRepository;
-import com.elegion.test.behancer.data_utils.repository.ProfileRepository;
-import com.elegion.test.behancer.data_utils.repository.ProjectRepository;
+import com.elegion.domain.repository.ProfileRepository;
+import com.elegion.domain.repository.ProjectRepository;
+import com.elegion.test.behancer.data.repository.ProfileDBRepository;
+import com.elegion.test.behancer.data.repository.ProfileServerRepository;
+import com.elegion.test.behancer.data.repository.ProjectDBRepository;
+import com.elegion.test.behancer.data.repository.ProjectServerRepository;
 
 import toothpick.config.Module;
 

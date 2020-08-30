@@ -6,8 +6,8 @@ import androidx.lifecycle.ViewModel;
 import androidx.paging.PagedList;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
-import com.elegion.test.behancer.data_utils.service.ProjectService;
-import com.example.domain.model.project.RichProject;
+import com.elegion.domain.model.project.RichProject;
+import com.elegion.domain.service.ProjectService;
 
 import io.reactivex.disposables.Disposable;
 

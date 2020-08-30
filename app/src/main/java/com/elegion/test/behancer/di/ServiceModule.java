@@ -1,9 +1,9 @@
 package com.elegion.test.behancer.di;
 
-import com.elegion.test.behancer.data_utils.service.ProfileService;
-import com.elegion.test.behancer.data_utils.service.ProfileServiceImpl;
-import com.elegion.test.behancer.data_utils.service.ProjectService;
-import com.elegion.test.behancer.data_utils.service.ProjectServiceImpl;
+import com.elegion.domain.service.ProfileService;
+import com.elegion.domain.service.ProfileServiceImpl;
+import com.elegion.domain.service.ProjectService;
+import com.elegion.domain.service.ProjectServiceImpl;
 
 import toothpick.config.Module;
 

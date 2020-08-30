@@ -12,7 +12,8 @@ android {
 
         javaCompileOptions {
             annotationProcessorOptions {
-                arguments = [ toothpick_registry_package_name : 'com.elegion.test.behancer.app' ]
+                arguments = [ toothpick_registry_package_name: 'com.elegion.test.behancer.app',
+                             toothpick_registry_children_package_names: 'com.elegion.test.behancer.data, com.elegion.domain' ]
             }
         }
     }
@@ -24,7 +25,7 @@ android {
         }
     }
 
-    dataBinding{
+    dataBinding {
         enabled = true
     }
 

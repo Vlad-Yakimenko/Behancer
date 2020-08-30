@@ -2,13 +2,11 @@ package com.elegion.test.behancer.ui.profile;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
-import androidx.databinding.ObservableBoolean;
-import androidx.databinding.ObservableField;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import android.view.View;
 
-import com.example.domain.model.user.User;
-import com.elegion.test.behancer.data_utils.service.ProfileService;
+import com.elegion.domain.model.user.User;
+import com.elegion.domain.service.ProfileService;
 
 import javax.inject.Inject;
 
